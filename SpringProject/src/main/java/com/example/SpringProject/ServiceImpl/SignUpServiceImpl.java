@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.SpringProject.Dao.signUpRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class SignUpServiceImpl implements signUpServices {
     @Autowired
@@ -30,4 +33,11 @@ public class SignUpServiceImpl implements signUpServices {
 
         return new ResponseEntity<>("200 SUCCESSFULL REGISTERED", HttpStatus.OK);
     }
+
+    @Override
+    public Optional<SignUp> getById(Long userId) {
+        return signUpRepository.findById(userId);
+    }
+
+
 }
