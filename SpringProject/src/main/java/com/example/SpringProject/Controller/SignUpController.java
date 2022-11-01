@@ -1,13 +1,11 @@
 package com.example.SpringProject.Controller;
 
 import com.example.SpringProject.Model.SignUp;
-import com.example.SpringProject.Sevice.signUpServices;
 import com.example.SpringProject.dto.SignUpdto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
