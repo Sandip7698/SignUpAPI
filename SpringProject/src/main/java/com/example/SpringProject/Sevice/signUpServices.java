@@ -11,4 +11,8 @@ import java.util.Optional;
 public interface signUpServices {
     ResponseEntity<String> saveinfo(SignUpdto signUpdto);
   Optional<SignUp> getById(Long userId);
+
+  Optional<SignUp> getByfirstName(String firstName);
+
+    Optional<SignUp> getBylastName(String lastName);
 }

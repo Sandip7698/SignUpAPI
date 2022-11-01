@@ -39,5 +39,17 @@ public class SignUpServiceImpl implements signUpServices {
         return signUpRepository.findById(userId);
     }
 
+    @Override
+    public Optional<SignUp> getByfirstName(String firstName) {
+        Optional<SignUp> optional=signUpRepository.getByfirstName(firstName);
+        return optional;
+    }
+
+    @Override
+    public Optional<SignUp> getBylastName(String lastName) {
+        Optional<SignUp> optional=signUpRepository.findBylastName(lastName);
+        return optional;
+    }
+
 
 }

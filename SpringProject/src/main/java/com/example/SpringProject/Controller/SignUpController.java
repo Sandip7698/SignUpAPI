@@ -21,4 +21,13 @@ public class SignUpController {
     public Optional<SignUp> getByid(@PathVariable ("userId")Long userId){
         return signUpServices.getById(userId);
     }
+    @GetMapping("/findByfirstName/{firstName}")
+    public Optional<SignUp> getByfirstName(@PathVariable("firstName")String firstName){
+        return signUpServices.getByfirstName(firstName);
+    }
+
+    @GetMapping("/findBylastName/{lastName}")
+    public Optional<SignUp>getBylastName(@PathVariable ("lastName")String lastName){
+        return signUpServices.getBylastName(lastName);
+    }
 }
