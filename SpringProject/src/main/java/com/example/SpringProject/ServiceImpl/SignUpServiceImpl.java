@@ -20,18 +20,55 @@ public class SignUpServiceImpl implements signUpServices {
 
     @Override
     public ResponseEntity<String> saveinfo(SignUpdto signUpdto) {
+//        SignUp signUp=new SignUp();
+//        signUp.setFirstName(signUpdto.getFirstName());
+//        signUp.setLastName(signUpdto.getLastName());
+//        signUp.setUserName(signUpdto.getUserName());
+//        signUp.setPassword(signUpdto.getPassword());
+//        signUp.setEmail(signUpdto.getEmail());
+//        signUp.setDob(signUpdto.getDob());
+//        signUp.setContact(signUpdto.getContact());
+//
+//        signUpRepository.save(signUp);
+//
+//        return new ResponseEntity<>("200 SUCCESSFULL REGISTERED", HttpStatus.OK);
+//    }
         SignUp signUp=new SignUp();
-        signUp.setFirstName(signUpdto.getFirstName());
-        signUp.setLastName(signUpdto.getLastName());
-        signUp.setUserName(signUpdto.getUserName());
+        Optional<SignUp> firstname=signUpRepository.findByFirstName(signUpdto.getFirstName());
+        Optional<SignUp> lastname=signUpRepository.findByLastName(signUpdto.getLastName());
+        if(!firstname.isPresent() && !lastname.isPresent()) {
+            signUp.setFirstName(signUpdto.getFirstName());
+            signUp.setLastName(signUpdto.getLastName());
+
+        }
+
+        Optional<SignUp> username=signUpRepository.findByuserName(signUpdto.getUserName());
+        if(!username.isPresent()) {
+
+            signUp.setUserName(signUpdto.getUserName());
+
+        }else {
+            return new ResponseEntity<>("USERNAME ALREADY EXIST ",HttpStatus.OK);
+        }
+
+
+        Optional<SignUp> email=signUpRepository.findByemail(signUpdto.getEmail());
+        if(!email.isPresent()) {
+            signUp.setEmail(signUpdto.getEmail());
+        }else {
+            return new ResponseEntity<>("EMAIL ALREADY EXIST ",HttpStatus.OK);
+        }
+
+        Optional<SignUp> contact=signUpRepository.findByContact(signUpdto.getContact());
+        if(!contact.isPresent()) {
+            signUp.setContact(signUpdto.getContact());
+        }
         signUp.setPassword(signUpdto.getPassword());
-        signUp.setEmail(signUpdto.getEmail());
         signUp.setDob(signUpdto.getDob());
-        signUp.setContact(signUpdto.getContact());
 
         signUpRepository.save(signUp);
 
-        return new ResponseEntity<>("200 SUCCESSFULL REGISTERED", HttpStatus.OK);
+        return new ResponseEntity<>("200 SUCCESSFULL REGISTERED",HttpStatus.OK);
     }
 
     @Override
@@ -50,6 +87,57 @@ public class SignUpServiceImpl implements signUpServices {
         Optional<SignUp> optional=signUpRepository.findBylastName(lastName);
         return optional;
     }
+
+    @Override
+    public Optional<SignUp> findByuserName(String userName) {
+        Optional<SignUp> optional=signUpRepository.findByuserName(userName);
+        return optional;
+    }
+
+    @Override
+    public Optional<SignUp> findByemail(String email) {
+        Optional<SignUp> optional=signUpRepository.findByemail(email);
+        return optional;
+    }
+
+    @Override
+    public Optional<SignUp> findByContact(Long contact) {
+        Optional<SignUp> optional=signUpRepository.findByContact(contact);
+        return optional;
+    }
+
+    @Override
+    public ResponseEntity<String> deleteById(Long userId) {
+        signUpRepository.deleteById(userId);
+        return new ResponseEntity<>("DELETE SUCCESSFULLY",HttpStatus.OK);
+    }
+
+    @Override
+    public List<SignUp> allinfo() {
+        List<SignUp> list=signUpRepository.findAll();
+        return 	list;
+    }
+
+    @Override
+    public ResponseEntity<String> updatedata(Long userId, SignUpdto signUpdto) {
+        ResponseEntity<String> msg=new ResponseEntity<>(" ",HttpStatus.OK);
+        Optional<SignUp> user=signUpRepository.findById(userId);
+        if(user.isPresent()) {
+            SignUp signUp=signUpRepository.getByuserId(userId);
+            signUp.setFirstName(signUpdto.getFirstName());
+            signUp.setLastName(signUpdto.getLastName());
+            signUp.setDob(signUpdto.getDob());
+            signUpRepository.save(signUp);
+            msg=new ResponseEntity<>("Updated Sucessfully... ",HttpStatus.OK);
+
+        }else {
+
+            msg=new ResponseEntity<>("User Not Exist... ",HttpStatus.OK);
+        }
+        return msg;
+    }
+
+
 
 
 }

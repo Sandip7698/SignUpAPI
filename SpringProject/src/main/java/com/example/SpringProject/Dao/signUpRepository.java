@@ -10,4 +10,16 @@ public interface signUpRepository extends JpaRepository<SignUp,Long> {
     Optional<SignUp> getByfirstName(String firstName);
 
     Optional<SignUp> findBylastName(String lastName);
+
+    Optional<SignUp> findByuserName(String userName);
+
+    Optional<SignUp> findByemail(String email);
+
+    Optional<SignUp> findByContact(Long contact);
+
+    SignUp getByuserId(Long userId);
+
+    Optional<SignUp> findByFirstName(String firstName);
+
+    Optional<SignUp> findByLastName(String lastName);
 }
